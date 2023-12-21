@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "todo_list.apps.TodoListConfig",  # see todo_list/apps.py
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -105,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Berlin"
 
 USE_I18N = True
 
