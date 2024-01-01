@@ -1,0 +1,7 @@
+[tool.djlint]
+indent = 2
+max_blank_lines = 1
+max_line_length = 100
+
+[tool.ruff]
+line-length = 100
