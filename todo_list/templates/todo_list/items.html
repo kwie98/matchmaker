@@ -2,7 +2,7 @@
 <ul>
   {% for item in items %}
   <li>
-    <a href="/todo/item/{{ item.id }}/">[{{ item.status }}] {{ item.text }}</a>
+    <a href="{% url "todo_list:item" item.id %}">[{{ item.status }}] {{ item.text }}</a>
   </li>
   {% endfor %}
 </ul>
