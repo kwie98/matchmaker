@@ -1,4 +1,5 @@
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
 
 from todo_list.models import Item
 
@@ -8,9 +9,8 @@ def index(_: HttpRequest) -> HttpResponse:
     return HttpResponse("Welcome to the todo list :)")
 
 
-def items(_: HttpRequest) -> HttpResponse:
-    items = Item.objects.all()
-    return HttpResponse(items)
+def items(request: HttpRequest) -> HttpResponse:
+    return render(request, "todo_list/items.html", {"items": Item.objects.all()})
 
 
 def item(_: HttpRequest, item_id: int) -> HttpResponse:
