@@ -5,6 +5,5 @@ from . import views
 app_name = "matchmaker"
 urlpatterns = [
     path("", views.index, name="index"),
-    path("make-teams/", views.make_teams, name="make-teams"),
     path("teams", views.teams, name="teams"),
 ]
