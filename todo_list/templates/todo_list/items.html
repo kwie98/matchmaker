@@ -1,12 +1,12 @@
 {% if items %}
-<ul>
-  {% for item in items %}
-  <li>
-    <a href="{% url "todo_list:item" item.id %}">[{{ item.status }}] {{ item.text }}</a>
-  </li>
-  {% endfor %}
-</ul>
+  <ul>
+    {% for item in items %}
+      <li>
+        <a href="{% url "todo_list:item" item.id %}">[{{ item.status }}] {{ item.text }}</a>
+      </li>
+    {% endfor %}
+  </ul>
 {% else %}
-<p>No items are available.</p>
+  <p>No items are available.</p>
 {% endif %}
 <!-- vim: set ft=htmldjango: -->

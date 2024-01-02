@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matchmaker</title>
-</head>
-
-<body>
-  <div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matchmaker</title>
+  </head>
+  <body>
     <form action="{% url 'matchmaker:teams' %}" method="post">
       {% csrf_token %}
-      <label>
-        Teamgröße
-        <input type="text" name="team_size">
-      </label>
+      <label for="team_size">Teamgröße</label>
+      <input type="text" name="team_size" id="team_size" placeholder="2" required />
+      <div>
+        <button type="submit">Submit</button>
+      </div>
     </form>
-  </div>
-</body>
-
+  </body>
 </html>
 <!-- vim: set ft=htmldjango: -->
