@@ -6,10 +6,11 @@
     <title>Matchmaker</title>
   </head>
   <body>
-    <form action="{% url 'matchmaker:teams' %}" method="post">
+    <form action="{% url 'matchmaker:make-teams' %}" method="post">
       {% csrf_token %}
       <label for="team_size">Teamgröße</label>
       <input type="text" name="team_size" id="team_size" placeholder="2" required />
+
       <div>
         <button type="submit">Submit</button>
       </div>
