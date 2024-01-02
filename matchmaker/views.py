@@ -25,13 +25,16 @@ def index(request: HttpRequest) -> HttpResponse:
     if not form.is_valid():
         return HttpResponseBadRequest()
 
-    request.session["teams"] = make_teams(
-        team_size=int(form.cleaned_data["team_size"]),
-        players=form.cleaned_data["players"].splitlines(),
-    )
+    request.session["team_size"] = int(form.cleaned_data["team_size"])
+    request.session["players"] = [
+        player
+        for line in form.cleaned_data["players"].splitlines()
+        if (player := line.strip()) != ""
+    ]
     return HttpResponseRedirect(reverse("matchmaker:teams"))
 
 
 def teams(request: HttpRequest) -> HttpResponse:
     """Show generated teams and give the option of re-rolling or going back."""
-    return HttpResponse(f"{request.session['teams']=}")
+    request.session["teams"] = make_teams(request.session["team_size"], request.session["players"])
+    return render(request, "matchmaker/teams.html", {"teams": request.session["teams"]})
