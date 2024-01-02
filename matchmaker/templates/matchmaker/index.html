@@ -9,7 +9,13 @@
 
 <body>
   <div>
-    Welcome to the matchmaker!
+    <form action="{% url 'matchmaker:teams' %}" method="post">
+      {% csrf_token %}
+      <label>
+        Teamgröße
+        <input type="text" name="team_size">
+      </label>
+    </form>
   </div>
 </body>
 
