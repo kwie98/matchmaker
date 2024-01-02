@@ -11,6 +11,8 @@
         {% for player in team %}<span>{{ player }}</span>{% endfor %}
       </div>
     {% endfor %}
+    <button onclick="window.location.reload()">Re-roll</button>
+    <button onclick="window.location.href=`{% url 'matchmaker:tournament' %}`">Confirm</button>
   </body>
 </html>
 <!-- vim: set ft=htmldjango: -->
