@@ -15,7 +15,7 @@ class TeamsForm(forms.Form):
 def index(request: HttpRequest) -> HttpResponse:
     """Display a form to input team size and players and handle form POST."""
     if request.method == "GET":
-        return render(request, "matchmaker/index.html", {"form": TeamsForm()})
+        return render(request, "matchmaker/index.html.django", {"form": TeamsForm()})
 
     form = TeamsForm(request.POST)
     if not form.is_valid():
@@ -33,7 +33,7 @@ def index(request: HttpRequest) -> HttpResponse:
 def teams(request: HttpRequest) -> HttpResponse:
     """Show generated teams and give the option of re-rolling or going back."""
     request.session["teams"] = make_teams(request.session["team_size"], request.session["players"])
-    return render(request, "matchmaker/teams.html", {"teams": request.session["teams"]})
+    return render(request, "matchmaker/teams.html.django", {"teams": request.session["teams"]})
 
 
 def tournament(request: HttpRequest) -> HttpResponse:

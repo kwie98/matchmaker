@@ -10,7 +10,7 @@ def index(_: HttpRequest) -> HttpResponse:
 
 
 def items(request: HttpRequest) -> HttpResponse:
-    return render(request, "todo_list/items.html", {"items": Item.objects.all()})
+    return render(request, "todo_list/items.html.django", {"items": Item.objects.all()})
 
 
 def item(_: HttpRequest, item_id: int) -> HttpResponse:
