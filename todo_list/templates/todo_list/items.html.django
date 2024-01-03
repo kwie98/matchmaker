@@ -9,4 +9,3 @@
 {% else %}
   <p>No items are available.</p>
 {% endif %}
-<!-- vim: set ft=htmldjango: -->

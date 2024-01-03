@@ -15,4 +15,3 @@
     <button onclick="window.location.href=`{% url 'matchmaker:tournament' %}`">Confirm</button>
   </body>
 </html>
-<!-- vim: set ft=htmldjango: -->
