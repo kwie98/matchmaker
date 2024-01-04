@@ -21,4 +21,5 @@ urlpatterns = [
     path("", include("matchmaker.urls")),
     path("todo/", include("todo_list.urls")),
     path("admin/", admin.site.urls),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
