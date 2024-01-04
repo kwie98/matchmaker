@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Matchmaker: Teams{% endblock %}
+
+{% block content %}
+  {% for team in teams %}
+    <div>
+      {% for player in team %}<span class="text-5xl">{{ player }}</span>{% endfor %}
+    </div>
+  {% endfor %}
+  <button onclick="window.location.reload()">Re-roll</button>
+  <button onclick="window.location.href=`{% url 'matchmaker:tournament' %}`">Confirm</button>
+{% endblock %}
