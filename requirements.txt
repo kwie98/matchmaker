@@ -1,6 +1,8 @@
 aniso8601==9.0.1
 asgiref==3.7.2
 Django==5.0
+django-browser-reload==1.12.1
+django-tailwind==3.8.0
 django-types==0.19.1
 graphene==3.3
 graphene-django==3.2.0
