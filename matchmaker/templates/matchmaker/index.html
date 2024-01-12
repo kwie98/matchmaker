@@ -3,11 +3,19 @@
 {% block title %}Matchmaker{% endblock %}
 
 {% block content %}
-  <form action="{% url 'matchmaker:index' %}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <div>
-      <button class="btn-blue" type="submit">Submit</button>
-    </div>
-  </form>
+  <div class="max-w-screen-sm p-6 mx-auto">
+    <form action="{% url 'matchmaker:index' %}" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="mb-4">
+          {{ field.errors }}
+          <div class="block text-gray-700 text-lg font-bold">{{ field.label_tag }}</div>
+          {{ field }}
+        </div>
+      {% endfor %}
+      <div>
+        <button class="btn-blue" type="submit">Randomize Teams</button>
+      </div>
+    </form>
+  </div>
 {% endblock %}

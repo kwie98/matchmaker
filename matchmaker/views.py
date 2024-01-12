@@ -8,8 +8,29 @@ from matchmaker.tournament import make_tournament
 
 
 class TeamsForm(forms.Form):
-    team_size = forms.IntegerField(min_value=1, required=True, label="Teamgröße", initial=2)
-    players = forms.CharField(required=True, label="Mitspieler", widget=forms.Textarea())
+    team_size = forms.IntegerField(
+        label="Teamgröße",
+        min_value=1,
+        required=True,
+        widget=forms.NumberInput(
+            attrs={
+                "value": "2",
+                "class": "min-w-full",
+                "size": 1,
+            }
+        ),
+    )
+    players = forms.CharField(
+        label="Mitspieler",
+        required=True,
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Fernando\nLewis\n...",
+                "class": "min-w-full",
+                "cols": 1,
+            }
+        ),
+    )
 
 
 def index(request: HttpRequest) -> HttpResponse:
