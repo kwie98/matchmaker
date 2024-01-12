@@ -1,4 +1,3 @@
-import json
 from typing import Literal, NamedTuple
 from matchmaker.teams import Team
 
@@ -33,5 +32,4 @@ def make_tournament(teams: list[Team]) -> list[list[Match]]:
                 )
             )
         rounds.append(matches)
-    json.dumps(rounds)
     return rounds
