@@ -3,12 +3,19 @@
 {% block title %}Matchmaker: Teams{% endblock %}
 
 {% block content %}
-  {% for team in teams %}
-    <div class="bg-{{ team.hue }}-300">
-      {% for player in team.members %}<span class="mx-2">{{ player }}</span>{% endfor %}
+  <div class="max-w-fit mx-auto">
+    <div class="inline-grid grid-cols-1">
+      {% for team in teams %}
+        <div class="flex justify-evenly w-full bg-{{ team.hue }}-300 text-xl p-1 m-2 shadow rounded-md">
+          {% for player in team.members %}<span class="capitalize mx-2">{{ player }}</span>{% endfor %}
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
-  <button class="btn-blue" onclick="window.location.reload()">Re-roll</button>
-  <button class="btn-blue"
-          onclick="window.location.href=`{% url 'matchmaker:tournament' %}`">Confirm</button>
+  </div>
+  <div class="max-w-fit mx-auto">
+    <div class="inline-grid grid-cols-2">
+      <button class="btn" onclick="window.location.reload()">Neu Verteilen</button>
+      <a class="btn" href="{% url 'matchmaker:tournament' %}">Turnier Aufstellen</a>
+    </div>
+  </div>
 {% endblock %}
