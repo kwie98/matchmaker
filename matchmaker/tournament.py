@@ -13,7 +13,7 @@ class Match(NamedTuple):
 
 def make_tournament(teams: list[Team]) -> list[list[Match]]:
     if len(teams) % 2 == 1:
-        pivot = ("Pause",)
+        pivot = Team("gray", ["Pause"])
         circle = teams
     else:
         pivot = teams[0]
