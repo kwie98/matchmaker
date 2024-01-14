@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "todo_list.apps.TodoListConfig",  # see todo_list/apps.py
     "matchmaker.apps.MatchmakerConfig",
     "django.contrib.admin",
     "django.contrib.auth",
