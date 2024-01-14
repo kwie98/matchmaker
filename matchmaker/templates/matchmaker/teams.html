@@ -6,7 +6,7 @@
   <div class="max-w-fit mx-auto">
     <div class="inline-grid grid-cols-1">
       {% for team in teams %}
-        <div class="flex justify-evenly w-full bg-{{ team.hue }}-300 text-xl p-1 m-2 shadow rounded-md">
+        <div class="flex justify-evenly w-full bg-{{ team.hue }}-300 p-1 m-2 shadow rounded-md">
           {% for player in team.members %}<span class="capitalize mx-2">{{ player }}</span>{% endfor %}
         </div>
       {% endfor %}

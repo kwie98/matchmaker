@@ -4,6 +4,6 @@
 
 @layer components {
     .btn {
-        @apply text-xl text-white rounded font-bold py-1 px-4 m-2 border-b-4 border-blue-700 hover:border-blue-500 bg-blue-500 hover:bg-blue-400 transition-colors;
+        @apply text-lg text-white rounded font-bold py-1 px-4 m-2 border-b-4 border-blue-700 hover:border-blue-500 bg-blue-500 hover:bg-blue-400 transition-colors;
     }
 }
