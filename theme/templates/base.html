@@ -2,18 +2,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>{% block title %}TITLE{% endblock %}</title>
+    <title>
+      {% block title %}TITLE{% endblock %}
+    </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% tailwind_css %}
   </head>
   <header class="bg-gray-100 px-4 py-2 border-b">
-    <h2 class="text-2xl">
-      Matchmaker
-    </h2>
+    <h2 class="text-2xl">Matchmaker</h2>
   </header>
   <body>
-    {% block content %}CONTENT{% endblock %}
+    <div class="max-w-screen-sm p-6 mx-auto">
+      {% block content %}CONTENT{% endblock %}
+    </div>
   </body>
 </html>
