@@ -58,5 +58,13 @@ def teams(request: HttpRequest) -> HttpResponse:
 
 
 def tournament(request: HttpRequest) -> HttpResponse:
-    request.session["rounds"] = make_tournament(request.session["teams"])
-    return HttpResponse(f"{request.session['rounds']}")
+    """Show overview over the tournament (all rounds). TODO: Show scoreboard."""
+    request.session["tournament"] = make_tournament(request.session["teams"])
+    return render(
+        request, "matchmaker/tournament.html", {"tournament": request.session["tournament"]}
+    )
+
+
+def round(request: HttpRequest, round: int) -> HttpResponse:
+    """TODO: Show details of a round, giving the option to post a match's result."""
+    return HttpResponse(f"{request.session['tournament'][round - 1]}")
