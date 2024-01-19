@@ -3,10 +3,11 @@
 {% block title %}Matchmaker: Turnier{% endblock %}
 
 {% block content %}
-  <div class="max-w-fit mx-auto">
+  <div class="mx-auto max-w-fit">
     <div class="inline-grid grid-cols-1">
       {% for round in tournament %}
-        <a class="text-blue-600 dark:text-blue-500 hover:underline" href="{% url 'matchmaker:rounds' forloop.counter %}">Round {{ forloop.counter }}</a>
+        <a class="text-blue-600 dark:text-blue-500 hover:underline"
+           href="{% url 'matchmaker:rounds' forloop.counter %}">Round {{ forloop.counter }}</a>
       {% endfor %}
     </div>
   </div>

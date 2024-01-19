@@ -8,11 +8,11 @@
     {% for field in form %}
       <div class="mb-4">
         {{ field.errors }}
-        <div class="block text-gray-700 font-bold">{{ field.label_tag }}</div>
+        <div class="block font-bold text-gray-700">{{ field.label_tag }}</div>
         {{ field }}
       </div>
     {% endfor %}
-    <div class="max-w-fit mx-auto">
+    <div class="mx-auto max-w-fit">
       <button class="btn" type="submit">Teams Aufstellen</button>
     </div>
   </form>
