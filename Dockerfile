@@ -16,6 +16,7 @@ COPY ./theme ./theme
 
 # Build tailwind styles:
 RUN ./manage.py tailwind install &&\
-    ./manage.py tailwind build
+    ./manage.py tailwind build &&\
+    ./manage.py collectstatic
 
-CMD ["./manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["daphne", "asgi:application", "-b", "0.0.0.0", "-p", "8000"]
