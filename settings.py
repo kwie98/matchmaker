@@ -26,8 +26,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")  # not available during docker image b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost"]
-
+ALLOWED_HOSTS = ["django", "localhost"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost"]
 
 # Application definition
 

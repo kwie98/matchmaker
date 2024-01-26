@@ -1,10 +1,24 @@
 services:
-  app:
+  django:
     build: .
-    container_name: django-matchmaker
+    container_name: matchmaker-django
     ports:
       - 8000:8000
     volumes:
       - ./db.sqlite3:/app/db.sqlite3
+      - static:/app/static
     environment:
       - SECRET_KEY="${SECRET_KEY}"
+
+  nginx:
+    build: ./nginx
+    container_name: matchmaker-nginx
+    volumes:
+      - static:/static
+    ports:
+      - 80:80
+    depends_on:
+      - django
+
+volumes:
+  static:
