@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")  # not available during docker image b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["192.168.178.33"]
 
 
 # Application definition
