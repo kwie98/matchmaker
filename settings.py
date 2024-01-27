@@ -26,8 +26,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")  # not available during docker image b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["django", "localhost"]
-CSRF_TRUSTED_ORIGINS = ["http://localhost"]
+ALLOWED_HOSTS = ["django"]
+CSRF_TRUSTED_ORIGINS = ["https://matchmaker.ddns.net"]
 
 # Application definition
 
@@ -60,8 +60,8 @@ MIDDLEWARE = [
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = "urls"
 

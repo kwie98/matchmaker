@@ -14,11 +14,21 @@ services:
     build: ./nginx
     container_name: matchmaker-nginx
     volumes:
-      - static:/static
+      - static:/static/
+      - ./nginx/:/etc/nginx/conf.d/:ro
+      - ./certbot/www/:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - django
+
+  certbot:
+    image: certbot/certbot:v2.8.0
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
 
 volumes:
   static:
