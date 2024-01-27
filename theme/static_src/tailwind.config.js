@@ -47,7 +47,11 @@ module.exports = {
         },
     ],
     theme: {
-        extend: {},
+        extend: {
+            gridTemplateColumns: {
+                round: "minmax(0, 1fr) auto minmax(0, 1fr)",
+            },
+        },
     },
     plugins: [
         /**
