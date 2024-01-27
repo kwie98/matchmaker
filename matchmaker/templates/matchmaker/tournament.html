@@ -6,8 +6,10 @@
   <div class="mx-auto max-w-fit">
     <div class="inline-grid grid-cols-1">
       {% for round in tournament %}
-        <a class="text-blue-600 dark:text-blue-500 hover:underline"
-           href="{% url 'matchmaker:rounds' forloop.counter %}">Round {{ forloop.counter }}</a>
+        <a class="p-1 m-2 bg-blue-500 rounded-md shadow transition-colors hover:bg-blue-400"
+           href="{% url 'matchmaker:rounds' forloop.counter %}">
+          <div class="mx-2 font-bold text-white">Round {{ forloop.counter }}</div>
+        </a>
       {% endfor %}
     </div>
   </div>
