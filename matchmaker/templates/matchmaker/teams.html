@@ -18,8 +18,10 @@
   </div>
   <div class="mx-auto max-w-fit">
     <div class="inline-grid grid-cols-2">
-      <button class="btn" onclick="window.location.reload()">Neu Verteilen</button>
-      <a class="btn" href="{% url 'matchmaker:tournament' %}">Turnier Aufstellen</a>
+      <button class="btn" onclick="window.location.reload()">Teams Neu Würfeln</button>
+      <button class="btn"
+         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+         hx-post="{{ request.path }}">Neues Turnier Erstellen</button>
     </div>
   </div>
 {% endblock %}

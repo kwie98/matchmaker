@@ -6,7 +6,7 @@ from django.urls import reverse
 from pydantic import BaseModel, ValidationError
 
 from matchmaker.teams import Team, make_teams
-from matchmaker.tournament import Match, MatchState, make_tournament
+from matchmaker.tournament import MatchState, Tournament, count_wins, make_tournament
 
 
 class TeamsForm(forms.Form):
@@ -39,7 +39,7 @@ class Session(BaseModel):
     team_size: int | None
     players: list[str] | None
     teams: list[Team] | None
-    tournament: dict[int, list[Match]] | None
+    tournament: Tournament | None
 
 
 class MatchUpdate(BaseModel):
@@ -47,7 +47,7 @@ class MatchUpdate(BaseModel):
     new_state: MatchState
 
 
-class Index(View):
+class IndexView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         return render(request, "matchmaker/index.html", {"form": TeamsForm()})
 
@@ -65,7 +65,14 @@ class Index(View):
         return HttpResponseRedirect(reverse("matchmaker:teams"))
 
 
-class Teams(View):
+class HTTPResponseHXRedirect(HttpResponseRedirect):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self["HX-Redirect"] = self["Location"]
+        self.status_code = 200
+
+
+class TeamsView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         """Show generated teams and give the option of re-rolling or going back."""
         try:
@@ -79,10 +86,7 @@ class Teams(View):
         request.session["teams"] = teams
         return render(request, "matchmaker/teams.html", {"teams": teams})
 
-
-class Tournament(View):
-    def get(self, request: HttpRequest) -> HttpResponse:
-        """Show overview over the tournament (all rounds). TODO: Show scoreboard."""
+    def post(self, request: HttpRequest) -> HttpResponse:
         try:
             session = Session(**request.session)
             if session.teams is None:
@@ -90,12 +94,27 @@ class Tournament(View):
         except ValidationError:
             return HttpResponseBadRequest()
 
-        tournament = make_tournament(session.teams)
-        request.session["tournament"] = tournament
-        return render(request, "matchmaker/tournament.html", {"tournament": tournament})
+        request.session["tournament"] = make_tournament(session.teams)
+        return HTTPResponseHXRedirect(reverse("matchmaker:tournament"))
 
 
-class Round(View):
+class TournamentView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """Show overview over the tournament (all rounds). TODO: Show scoreboard."""
+        try:
+            session = Session(**request.session)
+            if session.tournament is None:
+                return HttpResponseBadRequest()
+        except ValidationError:
+            return HttpResponseBadRequest()
+
+        scores = count_wins(session.tournament)
+        return render(
+            request, "matchmaker/tournament.html", {"tournament": session.tournament}
+        )
+
+
+class RoundView(View):
     def get(self, request: HttpRequest, round: int) -> HttpResponse:
         try:
             session = Session(**request.session)
@@ -105,7 +124,9 @@ class Round(View):
             return HttpResponseBadRequest()
 
         print(request.session["tournament"])
-        return render(request, "matchmaker/round.html", {"matches": session.tournament[round]})
+        return render(
+            request, "matchmaker/round.html", {"matches": session.tournament[round], "round": round}
+        )
 
     def post(self, request: HttpRequest, round: int) -> HttpResponse:
         try:
