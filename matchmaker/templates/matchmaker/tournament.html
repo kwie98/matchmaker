@@ -10,7 +10,7 @@
       {% for round in tournament %}
         <a class="p-1 m-2 bg-blue-500 rounded-md shadow transition-colors hover:bg-blue-400"
            href="{% url 'matchmaker:rounds' forloop.counter %}">
-          <div class="mx-2 font-bold text-white">Round {{ forloop.counter }}</div>
+          <div class="mx-2 font-bold text-white">Runde {{ forloop.counter }}</div>
         </a>
       {% endfor %}
     </div>
