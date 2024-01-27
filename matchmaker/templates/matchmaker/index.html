@@ -2,8 +2,10 @@
 
 {% block title %}Matchmaker{% endblock %}
 
+{% block heading %}Matchmaker{% endblock %}
+
 {% block content %}
-  <form action="{% url 'matchmaker:index' %}" method="post">
+  <form action="{% url 'matchmaker:index' %}" method="post" class="mx-4">
     {% csrf_token %}
     {% for field in form %}
       <div class="mb-4">
