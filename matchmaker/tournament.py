@@ -11,14 +11,14 @@ class Match(NamedTuple):
     state: MatchState
 
 
-def make_tournament(teams: list[Team]) -> list[list[Match]]:
+def make_tournament(teams: list[Team]) -> dict[int, list[Match]]:
     if len(teams) % 2 == 1:
         pivot = Team("gray", ["Pause"])
         circle = teams
     else:
         pivot = teams[0]
         circle = teams[1:]
-    rounds = []
+    rounds: dict[int, list[Match]] = {}
     for pivot_i in range(len(circle)):  # Rounds
         # The pivot team plays each other team in order:
         matches = [Match(pivot, circle[pivot_i], "TBD")]
@@ -31,5 +31,5 @@ def make_tournament(teams: list[Team]) -> list[list[Match]]:
                     "TBD",
                 )
             )
-        rounds.append(matches)
+        rounds[pivot_i + 1] = matches
     return rounds
