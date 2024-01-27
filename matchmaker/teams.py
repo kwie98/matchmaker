@@ -9,10 +9,6 @@ class Team(NamedTuple):
     hue: str
     members: list[str]
 
-    def __str__(self) -> str:
-        return "yo"
-
-
 def make_teams(team_size: int, players: list[str]) -> list[Team]:
     permutation = sample(players, k=len(players))
     return list(
