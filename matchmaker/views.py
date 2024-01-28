@@ -3,7 +3,7 @@ from django.views import View
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel
 
 from matchmaker.teams import Team, make_teams
 from matchmaker.tournament import MatchState, Tournament, count_wins, make_tournament
@@ -75,11 +75,8 @@ class HTTPResponseHXRedirect(HttpResponseRedirect):
 class TeamsView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         """Show generated teams and give the option of re-rolling or going back."""
-        try:
-            session = Session(**request.session)
-            if session.team_size is None or session.players is None:
-                return HttpResponseBadRequest()
-        except ValidationError:
+        session = Session(**request.session)
+        if session.team_size is None or session.players is None:
             return HttpResponseBadRequest()
 
         teams = make_teams(session.team_size, session.players)
@@ -87,11 +84,8 @@ class TeamsView(View):
         return render(request, "matchmaker/teams.html", {"teams": teams})
 
     def post(self, request: HttpRequest) -> HttpResponse:
-        try:
-            session = Session(**request.session)
-            if session.teams is None:
-                return HttpResponseBadRequest()
-        except ValidationError:
+        session = Session(**request.session)
+        if session.teams is None:
             return HttpResponseBadRequest()
 
         request.session["tournament"] = make_tournament(session.teams)
@@ -101,11 +95,8 @@ class TeamsView(View):
 class TournamentView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         """Show overview over the tournament (all rounds). TODO: Show scoreboard."""
-        try:
-            session = Session(**request.session)
-            if session.teams is None or session.tournament is None:
-                return HttpResponseBadRequest()
-        except ValidationError:
+        session = Session(**request.session)
+        if session.teams is None or session.tournament is None:
             return HttpResponseBadRequest()
 
         scores = count_wins(session.teams, session.tournament)
@@ -118,24 +109,17 @@ class TournamentView(View):
 
 class RoundView(View):
     def get(self, request: HttpRequest, round: int) -> HttpResponse:
-        try:
-            session = Session(**request.session)
-            if session.tournament is None:
-                return HttpResponseBadRequest()
-        except ValidationError:
+        session = Session(**request.session)
+        if session.tournament is None:
             return HttpResponseBadRequest()
 
-        print(request.session["tournament"])
         return render(
             request, "matchmaker/round.html", {"matches": session.tournament[round], "round": round}
         )
 
     def post(self, request: HttpRequest, round: int) -> HttpResponse:
-        try:
-            post = next(iter(request.POST.items()))
-            match_update = MatchUpdate(index=post[0], new_state=post[1])
-        except ValidationError:
-            return HttpResponseBadRequest()
+        post = next(iter(request.POST.items()))
+        match_update = MatchUpdate(index=post[0], new_state=post[1])
 
         request.session["tournament"][str(round)][match_update.index][2] = match_update.new_state
         request.session.modified = True
