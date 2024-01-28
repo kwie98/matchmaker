@@ -1,6 +1,8 @@
 from typing import Literal, NamedTuple
 from matchmaker.teams import Team
 
+PAUSE = Team("gray", ("Pause",))
+
 
 type MatchState = Literal["LEFT_WON"] | Literal["RIGHT_WON"] | Literal["TBD"]
 
@@ -16,7 +18,7 @@ type Tournament = dict[int, list[Match]]
 
 def make_tournament(teams: list[Team]) -> Tournament:
     if len(teams) % 2 == 1:
-        pivot = Team("gray", ("Pause",))
+        pivot = PAUSE
         circle = teams
     else:
         pivot = teams[0]
@@ -38,5 +40,14 @@ def make_tournament(teams: list[Team]) -> Tournament:
     return rounds
 
 
-def count_wins(tournament: Tournament) -> dict[Team, int]:
-    pass # TODO
+def count_wins(teams: list[Team], tournament: Tournament) -> dict[Team, int]:
+    scores: dict[Team, int] = {team: 0 for team in teams}
+    scores[PAUSE] = 0
+    for round in tournament.values():
+        for match in round:
+            if match.state == "LEFT_WON":
+                scores[match.left] += 1
+            if match.state == "RIGHT_WON":
+                scores[match.right] += 1
+    del scores[PAUSE]
+    return dict(sorted(scores.items(), key=lambda t: -t[1]))

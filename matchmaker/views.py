@@ -103,14 +103,16 @@ class TournamentView(View):
         """Show overview over the tournament (all rounds). TODO: Show scoreboard."""
         try:
             session = Session(**request.session)
-            if session.tournament is None:
+            if session.teams is None or session.tournament is None:
                 return HttpResponseBadRequest()
         except ValidationError:
             return HttpResponseBadRequest()
 
-        scores = count_wins(session.tournament)
+        scores = count_wins(session.teams, session.tournament)
         return render(
-            request, "matchmaker/tournament.html", {"tournament": session.tournament}
+            request,
+            "matchmaker/tournament.html",
+            {"tournament": session.tournament, "scores": scores},
         )
 
 
