@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent
 SECRET_KEY = os.environ.get("SECRET_KEY")  # not available during docker image build time
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["django"]
 CSRF_TRUSTED_ORIGINS = ["https://matchmaker.ddns.net"]
 
 # Application definition
