@@ -50,6 +50,7 @@ module.exports = {
         extend: {
             gridTemplateColumns: {
                 round: "minmax(0, 1fr) auto minmax(0, 1fr)",
+                scores: "minmax(0, 1fr) auto",
             },
         },
     },
