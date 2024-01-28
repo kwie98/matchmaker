@@ -27,7 +27,7 @@ class TeamsForm(forms.Form):
         required=True,
         widget=forms.Textarea(
             attrs={
-                "placeholder": "Fernando\nLewis\n...",
+                "placeholder": "Alejandro\nFernando\nRoberto\n...",
                 "class": "min-w-full",
                 "cols": 1,
             }
