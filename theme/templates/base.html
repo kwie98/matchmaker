@@ -12,12 +12,14 @@
     {% tailwind_preload_css %}
     {% tailwind_css %}
   </head>
-  <header class="py-2 px-4 bg-gray-100 border-b">
-    <a href="/">
-      <h2 class="text-2xl">{% block heading %}HEADING{% endblock %}</h2>
-    </a>
-  </header>
   <body>
+    <header class="py-2 px-4 bg-gray-100 border-b">
+      <a href="/">
+        <h2 class="text-2xl">
+          {% block heading %}HEADING{% endblock %}
+        </h2>
+      </a>
+    </header>
     <div class="mx-auto max-w-screen-sm">
       {% block content %}CONTENT{% endblock %}
     </div>
