@@ -36,10 +36,10 @@ class TeamsForm(forms.Form):
 
 
 class Session(BaseModel):
-    team_size: int | None
-    players: list[str] | None
-    teams: list[Team] | None
-    tournament: Tournament | None
+    team_size: int | None = None
+    players: list[str] | None = None
+    teams: list[Team] | None = None
+    tournament: Tournament | None = None
 
 
 class MatchUpdate(BaseModel):
