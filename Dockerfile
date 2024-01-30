@@ -1,26 +1,38 @@
-FROM python:3.12.1-alpine3.19
+FROM python:3.12.1-slim-bookworm AS django
 WORKDIR /app
 
-# Node deps:
-RUN apk add --no-cache\
-    npm=10.2.5-r0\
-    libffi-dev\
-    musl-dev=1.2.4_git20230717-r4\
-    gcc=13.2.1_git20231014-r0 &&\
-    rm -rf /var/apk/cache/*
+ENV VIRTUAL_ENV="/app/venv"
+RUN python -m venv "${VIRTUAL_ENV}"
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
-# Python deps:
 COPY ./requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Source:
 COPY ./asgi.py ./manage.py ./settings.py ./urls.py ./wsgi.py ./
 COPY ./matchmaker ./matchmaker
 COPY ./theme ./theme
 
-# Build tailwind styles:
+CMD ["daphne", "asgi:application", "-b", "0.0.0.0", "-p", "8000"]
+
+
+FROM python:3.12.1-slim-bookworm AS nodebuilder
+WORKDIR /app
+
+COPY --from=django /app ./
+
+ENV VIRTUAL_ENV="/app/venv"
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    "npm=9.2.0~ds1-1" \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN ./manage.py tailwind install &&\
     ./manage.py tailwind build &&\
     ./manage.py collectstatic
 
-CMD ["daphne", "asgi:application", "-b", "0.0.0.0", "-p", "8000"]
+
+FROM nginx:1.25.3-bookworm AS nginx
+
+COPY --from=nodebuilder /app/static /static
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
