@@ -6,8 +6,12 @@ indent_style = space
 indent_size = 4
 max_line_length = 100
 
-[*.{md,json,yml,yaml,html}]
+[*.{json,yml,yaml,html}]
 indent_size = 2
 
 [*.html.django]
 indent_size = 2
+
+[*.md]
+indent_size = 2
+max_line_length = 0
