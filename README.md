@@ -1,6 +1,6 @@
 # Matchmaker
 
-Create a (random round robin) tournament with randomized teams, note down results and track all team's scores on a scoreboard.
+Create random round robin tournaments with randomized teams and track scores on a scoreboard.
 
 ## Develop
 
@@ -27,7 +27,7 @@ pip install -r requirements.txt # python dependencies
 
 ### HTTPS
 
-- <https://mindsers.blog/en/post/https-using-nginx-certbot-docker/>
+- <https://mpolinowski.github.io/docs/DevOps/NGINX/2020-08-28--nginx-docker-certbot/2020-08-27/>
 - `certbot certonly --standalone` while server is not running
 
 ## Stack
