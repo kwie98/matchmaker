@@ -4,4 +4,73 @@ max_blank_lines = 1
 max_line_length = 100
 
 [tool.ruff]
+lint.select = [
+    "F",
+    "E",
+    "W",
+    "C90",
+    "I",
+    "N",
+    "D",
+    "UP",
+    "YTT",
+    "ANN",
+    "S",
+    "BLE",
+    "FBT",
+    "B",
+    "A",
+    "COM",
+    "C4",
+    "DTZ",
+    "T10",
+    "DJ",
+    "EM",
+    "EXE",
+    "ISC",
+    "ICN",
+    "G",
+    "INP",
+    "PIE",
+    # "T20", # prints are ok
+    "PYI",
+    "PT",
+    "Q",
+    "RSE",
+    "RET",
+    "SLF",
+    "SIM",
+    "TID",
+    "TCH",
+    "ARG",
+    "PTH",
+    # "ERA", # commented code
+    "PD",
+    "PGH",
+    "PL",
+    "TRY",
+    "NPY",
+    "RUF",
+]
+lint.ignore = [
+    "ANN101",  # self type annotation not needed
+    "ANN102",  # cls type annotation not needed
+    "ANN204",  # __init__ return type annotation not needed
+    "COM812",  # Missing trailing comma is ok(just follow black for this)
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106",
+    "D107",
+    "E731",    # lambdas are ok
+    "PLR0913", # Too many arguments are ok
+    "PLR0915", # Too many statements are ok
+    "S101",    # asserts are ok
+]
 line-length = 100
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
