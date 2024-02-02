@@ -26,7 +26,7 @@
     <div class="inline-grid grid-cols-scores">
       {% for team, score in scores.items %}
         <div class="p-2">
-          <div class="p-1 flex justify-evenly w-full bg-{{ team.hue }}-300 rounded-md shadow">
+          <div class="p-1 flex flex-wrap justify-evenly w-full bg-{{ team.hue }}-300 rounded-md shadow">
             {% for player in team.members %}<span class="mx-2 capitalize">{{ player }}</span>{% endfor %}
           </div>
         </div>
