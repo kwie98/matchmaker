@@ -2,6 +2,15 @@
 indent = 2
 max_blank_lines = 1
 max_line_length = 100
+format_css = true
+format_js = true
+ignore = "T001"
+
+[tool.djlint.css]
+indent_size = 2
+
+[tool.djlint.js]
+indent_size = 2
 
 [tool.ruff]
 lint.select = [
