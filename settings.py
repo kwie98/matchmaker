@@ -13,7 +13,6 @@ SESSION_COOKIE_SECURE = True
 INSTALLED_APPS = [
     "daphne",
     "matchmaker.apps.MatchmakerConfig",
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
