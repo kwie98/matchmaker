@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}Matchmaker: Runde {{ round }}{% endblock %}
+{% block title %}
+  Matchmaker: Runde {{ round }}
+{% endblock title %}
 
-{% block heading %}Runde {{ round }}{% endblock %}
+{% block heading %}
+  Runde {{ round }}
+{% endblock heading %}
 
 {% block content %}
   <div class="mx-auto max-w-fit">
     <div class="inline-grid grid-cols-round">
       {% for match in matches %}
         <div class="p-2">
-          <div class="p-1 flex flex-col items-center bg-{{ match.0.0 }}-300 rounded-md shadow">
-            {% for player in match.0.1 %}<span class="mx-2 capitalize">{{ player }}</span>{% endfor %}
+          <div class="p-1 flex flex-col items-center bg-{{ match.left.hue }}-300 rounded-md shadow">
+            {% for player in match.left.members %}
+              <span class="mx-2 capitalize">{{ player }}</span>
+            {% endfor %}
           </div>
         </div>
         <div class="flex items-center">
@@ -18,30 +24,32 @@
                  type="radio"
                  name="{{ forloop.counter0 }}"
                  value="LEFT_WON"
-                 {% if match.2 == "LEFT_WON" %}checked{% endif %}
+                 {% if match.state == "LEFT_WON" %}checked{% endif %}
                  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                  hx-post="{{ request.path }}">
           <input class="m-1"
                  type="radio"
                  name="{{ forloop.counter0 }}"
                  value="TBD"
-                 {% if match.2 == "TBD" %}checked{% endif %}
+                 {% if match.state == "TBD" %}checked{% endif %}
                  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                  hx-post="{{ request.path }}">
           <input class="m-1"
                  type="radio"
                  name="{{ forloop.counter0 }}"
                  value="RIGHT_WON"
-                 {% if match.2 == "RIGHT_WON" %}checked{% endif %}
+                 {% if match.state == "RIGHT_WON" %}checked{% endif %}
                  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                  hx-post="{{ request.path }}">
         </div>
         <div class="p-2">
-          <div class="p-1 flex flex-col items-center bg-{{ match.1.0 }}-300 rounded-md shadow">
-            {% for player in match.1.1 %}<span class="mx-2 capitalize">{{ player }}</span>{% endfor %}
+          <div class="p-1 flex flex-col items-center bg-{{ match.right.hue }}-300 rounded-md shadow">
+            {% for player in match.right.members %}
+              <span class="mx-2 capitalize">{{ player }}</span>
+            {% endfor %}
           </div>
         </div>
       {% endfor %}
     </div>
   </div>
-{% endblock %}
+{% endblock content %}

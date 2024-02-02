@@ -2,8 +2,13 @@
 <!DOCTYPE html>
 <html lang="en" class="text-lg">
   <head>
+    <meta name="description"
+          content="Create random round robin tournaments with randomized teams and track scores on a scoreboard.">
+    <meta name="keywords" content="Random, Tournament, Scoreboard">
     <title>
-      {% block title %}TITLE{% endblock %}
+      {% block title %}
+        TITLE
+      {% endblock title %}
     </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,14 +19,18 @@
   </head>
   <body>
     <header class="py-2 px-4 bg-gray-100 border-b">
-      <a href="/">
+      <a href="{% url "matchmaker:index" %}">
         <h2 class="text-2xl">
-          {% block heading %}HEADING{% endblock %}
+          {% block heading %}
+            HEADING
+          {% endblock heading %}
         </h2>
       </a>
     </header>
     <div class="mx-auto max-w-screen-sm">
-      {% block content %}CONTENT{% endblock %}
+      {% block content %}
+        CONTENT
+      {% endblock content %}
     </div>
   </body>
 </html>

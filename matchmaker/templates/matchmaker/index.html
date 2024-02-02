@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Matchmaker{% endblock %}
+{% block title %}
+  Matchmaker
+{% endblock title %}
 
-{% block heading %}Matchmaker{% endblock %}
+{% block heading %}
+  Matchmaker
+{% endblock heading %}
 
 {% block content %}
   <form action="{% url 'matchmaker:index' %}" method="post" class="mx-4">
@@ -18,4 +22,4 @@
       <button class="btn" type="submit">Teams Aufstellen</button>
     </div>
   </form>
-{% endblock %}
+{% endblock content %}

@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Matchmaker: Teams{% endblock %}
+{% block title %}
+  Matchmaker: Teams
+{% endblock title %}
 
-{% block heading %}Teams{% endblock %}
+{% block heading %}
+  Teams
+{% endblock heading %}
 
 {% block content %}
   <div class="mx-auto max-w-fit">
@@ -20,8 +24,8 @@
     <div class="inline-grid grid-cols-2">
       <button class="btn" onclick="window.location.reload()">Teams Neu Würfeln</button>
       <button class="btn"
-         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-         hx-post="{{ request.path }}">Neues Turnier Erstellen</button>
+              hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+              hx-post="{{ request.path }}">Neues Turnier Erstellen</button>
     </div>
   </div>
-{% endblock %}
+{% endblock content %}
