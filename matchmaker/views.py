@@ -110,17 +110,6 @@ class TournamentView(View):
             {"tournament": session.tournament, "scores": scores},
         )
 
-
-class RoundView(View):
-    def get(self, request: HttpRequest, rnd: int) -> HttpResponse:
-        session = Session(**request.session)
-        if session.tournament is None:
-            return HttpResponseBadRequest()
-
-        return render(
-            request, "matchmaker/round.html", {"matches": session.tournament[rnd], "round": rnd}
-        )
-
     def post(self, request: HttpRequest, rnd: int) -> HttpResponse:
         post = next(iter(request.POST.items()))
         match_update = MatchUpdate(index=post[0], new_state=post[1])

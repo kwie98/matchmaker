@@ -9,15 +9,56 @@
 {% endblock heading %}
 
 {% block content %}
-  <div class="mx-auto max-w-fit">
-    <div class="inline-grid grid-cols-1">
-      {% for round in tournament %}
-        <a class="p-1 m-2 bg-blue-500 rounded-md shadow transition-colors hover:bg-blue-400"
-           href="{% url 'matchmaker:rounds' forloop.counter %}">
-          <div class="mx-2 font-bold text-white">Runde {{ forloop.counter }}</div>
-        </a>
-      {% endfor %}
-    </div>
+
+  <div class="inline-grid grid-cols-1 min-w-full">
+    {% for round in tournament %}
+      <details>
+        <summary>Runde {{ forloop.counter }}</summary>
+        <div>
+          <div class="inline-grid grid-cols-round">
+            {% for match in round %}
+              <div class="flex items-center p-2">
+                <div class="p-1 flex flex-wrap justify-evenly items-center bg-{{ match.left.hue }}-300 rounded-md shadow">
+                  {% for player in match.left.members %}
+                    <span class="mx-2 capitalize">{{ player }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="flex items-center">
+                <input class="m-1"
+                       type="radio"
+                       name="{{ forloop.counter0 }}"
+                       value="LEFT_WON"
+                       {% if match.state == "LEFT_WON" %}checked{% endif %}
+                       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                       hx-post="{{ request.path }}">
+                <input class="m-1"
+                       type="radio"
+                       name="{{ forloop.counter0 }}"
+                       value="TBD"
+                       {% if match.state == "TBD" %}checked{% endif %}
+                       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                       hx-post="{{ request.path }}">
+                <input class="m-1"
+                       type="radio"
+                       name="{{ forloop.counter0 }}"
+                       value="RIGHT_WON"
+                       {% if match.state == "RIGHT_WON" %}checked{% endif %}
+                       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                       hx-post="{{ request.path }}">
+              </div>
+              <div class="flex items-center p-2">
+                <div class="p-1 flex flex-wrap justify-evenly items-center bg-{{ match.right.hue }}-300 rounded-md shadow">
+                  {% for player in match.right.members %}
+                    <span class="mx-2 capitalize">{{ player }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </details>
+    {% endfor %}
   </div>
 
   <hr>
@@ -34,6 +75,32 @@
       {% endfor %}
     </div>
   </div>
+
+  <style>
+    @keyframes animate {
+      from {
+        grid-template-rows: 0fr;
+      }
+
+      to {
+        grid-template-rows: 1fr;
+      }
+    }
+
+    details>div {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: all ease-in-out 0.5s;
+    }
+
+    details>div>div {
+      overflow: hidden;
+    }
+
+    details[open]>div {
+      animation: animate 0.15s 0s 1 normal forwards;
+    }
+  </style>
 
   <script>
     window.addEventListener("pageshow", function(event) {
