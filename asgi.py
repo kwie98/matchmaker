@@ -1,5 +1,4 @@
-"""
-ASGI config for matchmaker project.
+"""ASGI config for matchmaker project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

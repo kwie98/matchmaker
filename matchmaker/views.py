@@ -1,8 +1,8 @@
 from django import forms
-from django.views import View
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.views import View
 from pydantic import BaseModel
 
 from matchmaker.teams import Team, make_teams
@@ -49,13 +49,16 @@ class MatchUpdate(BaseModel):
 
 class IndexView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
+        """Show a `TeamsForm` form for inputting team size and player names."""
         return render(request, "matchmaker/index.html", {"form": TeamsForm()})
 
     def post(self, request: HttpRequest) -> HttpResponse:
+        """Flush session, put inputs from `TeamsForm` form and redirect to the teams view."""
         form = TeamsForm(request.POST)
         if not form.is_valid():
             return HttpResponseBadRequest()
 
+        request.session.flush()
         request.session["team_size"] = int(form.cleaned_data["team_size"])
         request.session["players"] = [
             player
@@ -66,7 +69,7 @@ class IndexView(View):
 
 
 class HTTPResponseHXRedirect(HttpResponseRedirect):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # noqa: ANN002, ANN003
         super().__init__(*args, **kwargs)
         self["HX-Redirect"] = self["Location"]
         self.status_code = 200
@@ -74,7 +77,7 @@ class HTTPResponseHXRedirect(HttpResponseRedirect):
 
 class TeamsView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        """Show generated teams and give the option of re-rolling or going back."""
+        """Generate teams and show them in a view."""
         session = Session(**request.session)
         if session.team_size is None or session.players is None:
             return HttpResponseBadRequest()
@@ -84,6 +87,7 @@ class TeamsView(View):
         return render(request, "matchmaker/teams.html", {"teams": teams})
 
     def post(self, request: HttpRequest) -> HttpResponse:
+        """Generate tournament and redirect to the tournament view."""
         session = Session(**request.session)
         if session.teams is None:
             return HttpResponseBadRequest()
@@ -108,19 +112,19 @@ class TournamentView(View):
 
 
 class RoundView(View):
-    def get(self, request: HttpRequest, round: int) -> HttpResponse:
+    def get(self, request: HttpRequest, rnd: int) -> HttpResponse:
         session = Session(**request.session)
         if session.tournament is None:
             return HttpResponseBadRequest()
 
         return render(
-            request, "matchmaker/round.html", {"matches": session.tournament[round], "round": round}
+            request, "matchmaker/round.html", {"matches": session.tournament[rnd], "round": rnd}
         )
 
-    def post(self, request: HttpRequest, round: int) -> HttpResponse:
+    def post(self, request: HttpRequest, rnd: int) -> HttpResponse:
         post = next(iter(request.POST.items()))
         match_update = MatchUpdate(index=post[0], new_state=post[1])
 
-        request.session["tournament"][str(round)][match_update.index][2] = match_update.new_state
+        request.session["tournament"][str(rnd)][match_update.index][2] = match_update.new_state
         request.session.modified = True
         return HttpResponse(status=204)

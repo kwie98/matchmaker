@@ -1,5 +1,4 @@
-"""
-WSGI config for matchmaker project.
+"""WSGI config for matchmaker project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

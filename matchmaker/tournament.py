@@ -1,10 +1,11 @@
 from typing import Literal, NamedTuple
+
 from matchmaker.teams import Team
 
 PAUSE = Team("gray", ("Pause",))
 
 
-type MatchState = Literal["LEFT_WON"] | Literal["RIGHT_WON"] | Literal["TBD"]
+type MatchState = Literal["LEFT_WON", "RIGHT_WON", "TBD"]
 
 
 class Match(NamedTuple):
@@ -43,8 +44,8 @@ def make_tournament(teams: list[Team]) -> Tournament:
 def count_wins(teams: list[Team], tournament: Tournament) -> dict[Team, int]:
     scores: dict[Team, int] = {team: 0 for team in teams}
     scores[PAUSE] = 0
-    for round in tournament.values():
-        for match in round:
+    for rnd in tournament.values():
+        for match in rnd:
             if match.state == "LEFT_WON":
                 scores[match.left] += 1
             if match.state == "RIGHT_WON":
