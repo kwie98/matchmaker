@@ -113,7 +113,11 @@ class TournamentView(View):
         if session.teams is None or session.tournament is None:
             return HttpResponseBadRequest()
 
-        session.tournament.set_match_result(match_update)
+        try:
+            session.tournament.set_match_result(match_update)
+        except TypeError:  # Trying to set match result for `Break` match:
+            return HttpResponseBadRequest()
+
         request.session["tournament"] = session.tournament.model_dump()
         # request.session.modified = True
         return render(
