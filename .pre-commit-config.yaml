@@ -19,3 +19,7 @@ repos:
     hooks:
       - id: djlint-reformat-django
       - id: djlint-django
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.349
+    hooks:
+      - id: pyright
