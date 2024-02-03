@@ -76,32 +76,6 @@
     </div>
   </div>
 
-  <style>
-    @keyframes animate {
-      from {
-        grid-template-rows: 0fr;
-      }
-
-      to {
-        grid-template-rows: 1fr;
-      }
-    }
-
-    details>div {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: all ease-in-out 0.5s;
-    }
-
-    details>div>div {
-      overflow: hidden;
-    }
-
-    details[open]>div {
-      animation: animate 0.15s 0s 1 normal forwards;
-    }
-  </style>
-
   <script>
     window.addEventListener("pageshow", function(event) {
       var historyTraversal = event.persisted ||
