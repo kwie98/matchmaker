@@ -6,7 +6,7 @@ from django.views import View
 from pydantic import BaseModel
 
 from matchmaker.teams import Team, make_teams
-from matchmaker.tournament import MatchState, Tournament, count_wins, make_tournament
+from matchmaker.tournament import MatchUpdate, Tournament, count_wins, make_tournament
 
 
 class TeamsForm(forms.Form):
@@ -40,11 +40,6 @@ class Session(BaseModel):
     players: list[str] | None = None
     teams: list[Team] | None = None
     tournament: Tournament | None = None
-
-
-class MatchUpdate(BaseModel):
-    index: int
-    new_state: MatchState
 
 
 class IndexView(View):
@@ -92,7 +87,7 @@ class TeamsView(View):
         if session.teams is None:
             return HttpResponseBadRequest()
 
-        request.session["tournament"] = make_tournament(session.teams)
+        request.session["tournament"] = make_tournament(session.teams).model_dump()
         return HTTPResponseHXRedirect(reverse("matchmaker:tournament"))
 
 
@@ -103,17 +98,29 @@ class TournamentView(View):
         if session.teams is None or session.tournament is None:
             return HttpResponseBadRequest()
 
-        scores = count_wins(session.teams, session.tournament)
         return render(
             request,
             "matchmaker/tournament.html",
-            {"tournament": session.tournament, "scores": scores},
+            {
+                "tournament": session.tournament,
+                "scores": count_wins(session.teams, session.tournament),
+            },
         )
 
-    def post(self, request: HttpRequest, rnd: int) -> HttpResponse:
-        post = next(iter(request.POST.items()))
-        match_update = MatchUpdate(index=post[0], new_state=post[1])
+    def post(self, request: HttpRequest) -> HttpResponse:
+        match_update = MatchUpdate.from_post(request.POST)
+        session = Session(**request.session)
+        if session.teams is None or session.tournament is None:
+            return HttpResponseBadRequest()
 
-        request.session["tournament"][str(rnd)][match_update.index][2] = match_update.new_state
-        request.session.modified = True
-        return HttpResponse(status=204)
+        session.tournament.set_match_result(match_update)
+        request.session["tournament"] = session.tournament.model_dump()
+        # request.session.modified = True
+        return render(
+            request,
+            "matchmaker/tournament.html",
+            {
+                "tournament": session.tournament,
+                "scores": count_wins(session.teams, session.tournament),
+            },
+        )
