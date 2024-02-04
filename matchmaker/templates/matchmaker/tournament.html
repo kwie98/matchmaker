@@ -12,7 +12,9 @@
   <div class="inline-grid grid-cols-1 min-w-full">
     {% for round in tournament.rounds %}
       <details {% if round.state == "CURRENT" %}open{% endif %}>
-        <summary>Runde {{ forloop.counter }} {{ round.state }}</summary>
+        <summary class="text-center">
+          Runde {{ forloop.counter }} <span class="{% if round.state == 'DONE' %}text-green-500{% else %}text-white{% endif %}">✓</span>
+        </summary>
         <div class="flex justify-center">
           <div class="inline-grid grid-cols-round">
             {% for match in round.matches %}
