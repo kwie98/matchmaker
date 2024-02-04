@@ -20,14 +20,14 @@
   <body>
     <header class="py-2 px-4 bg-gray-100 border-b">
       <a href="{% url "matchmaker:index" %}">
-        <h2 class="text-2xl mx-auto max-w-screen-sm">
+        <h2 class="text-2xl text-center mx-auto max-w-screen-sm">
           {% block heading %}
             HEADING
           {% endblock heading %}
         </h2>
       </a>
     </header>
-    <div class="mx-auto max-w-screen-sm">
+    <div class="px-4 mx-auto max-w-screen-sm">
       {% block content %}
         CONTENT
       {% endblock content %}
