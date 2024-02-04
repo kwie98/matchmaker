@@ -22,7 +22,7 @@ class TeamsForm(forms.Form):
             }
         ),
     )
-    players = forms.CharField(
+    player_groups = forms.CharField(
         label="Mitspieler",
         required=True,
         widget=forms.Textarea(
@@ -37,7 +37,7 @@ class TeamsForm(forms.Form):
 
 class Session(BaseModel):
     team_size: int | None = None
-    players: list[str] | None = None
+    player_groups: str | None = None
     teams: list[Team] | None = None
     tournament: Tournament | None = None
 
@@ -55,11 +55,11 @@ class IndexView(View):
 
         request.session.flush()
         request.session["team_size"] = int(form.cleaned_data["team_size"])
-        request.session["players"] = [
-            player
-            for line in form.cleaned_data["players"].splitlines()
-            if (player := line.strip()) != ""
-        ]
+        request.session["player_groups"] = form.cleaned_data["player_groups"]
+        # request.session["player_groups"] = [
+        #     line.strip()
+        #     for line in form.cleaned_data["player_groups"].splitlines()
+        # ]
         return HttpResponseRedirect(reverse("matchmaker:teams"))
 
 
@@ -74,10 +74,10 @@ class TeamsView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         """Generate teams and show them in a view."""
         session = Session(**request.session)
-        if session.team_size is None or session.players is None:
+        if session.team_size is None or session.player_groups is None:
             return HttpResponseBadRequest()
 
-        teams = make_teams(session.team_size, session.players)
+        teams = make_teams(session.team_size, session.player_groups)
         request.session["teams"] = teams
         return render(request, "matchmaker/teams.html", {"teams": teams})
 
