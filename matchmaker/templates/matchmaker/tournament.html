@@ -9,6 +9,7 @@
 {% endblock heading %}
 
 {% block content %}
+  <h3 class="pt-1 text-xl text-center border-b">Runden</h3>
   <div class="inline-grid grid-cols-1 min-w-full">
     {% for round in tournament.rounds %}
       <details {% if round.state == "CURRENT" %}open{% endif %}>
@@ -70,8 +71,7 @@
     {% endfor %}
   </div>
 
-  <hr>
-
+  <h3 class="pt-1 text-xl text-center border-b">Tabelle</h3>
   <div class="mx-auto max-w-fit">
     <div class="inline-grid grid-cols-scores">
       {% for team, score in scores.items %}
