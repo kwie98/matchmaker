@@ -46,15 +46,6 @@ class Round(BaseModel):
     matches: list[Match]
     state: RoundState
 
-    def get_state_hue(self) -> str:
-        match self.state:
-            case "DONE":
-                return "green"
-            case "CURRENT":
-                return "blue"
-            case "FUTURE":
-                return "gray"
-
 
 class Tournament(BaseModel):
     rounds: list[Round]
