@@ -11,7 +11,7 @@ from matchmaker.tournament import MatchUpdate, Tournament, count_wins, make_tour
 
 class TeamsForm(forms.Form):
     team_size = forms.IntegerField(
-        label="Teamgröße",
+        label="Spieler pro Team",
         min_value=1,
         required=True,
         widget=forms.NumberInput(
