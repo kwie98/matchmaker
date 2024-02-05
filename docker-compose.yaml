@@ -12,6 +12,7 @@ services:
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
       - DJANGO_DEBUG=${DJANGO_DEBUG}
+    restart: unless-stopped
 
   nginx:
     container_name: matchmaker-nginx
@@ -25,3 +26,4 @@ services:
       - 443:443
     depends_on:
       - django
+    restart: unless-stopped
