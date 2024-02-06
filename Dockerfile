@@ -14,6 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./asgi.py ./manage.py ./settings.py ./urls.py ./wsgi.py ./
 COPY ./matchmaker ./matchmaker
 COPY ./theme ./theme
+RUN ./manage.py check --deploy --fail-level WARNING
 CMD ["daphne", "asgi:application", "-b", "0.0.0.0", "-p", "8000"]
 
 FROM nodebuilder AS staticbuilder
