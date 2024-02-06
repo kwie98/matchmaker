@@ -11,7 +11,12 @@ SESSION_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 10
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-SILENCED_SYSTEM_CHECKS = ["security.W008"]  # Nginx already redirects to HTTPS
+SILENCED_SYSTEM_CHECKS = [
+    # Nginx already redirects to HTTPS:
+    "security.W008",
+    # Secret is not available at docker image build time, where `./manage.py check` is run:
+    "security.W009",
+]
 
 # Application definition:
 INSTALLED_APPS = [
