@@ -40,5 +40,6 @@ pip install -r requirements.txt # python dependencies
 ### Tasks
 
 - Clear expired sessions from the db regularly (`./manage.py clearsessions`) <https://docs.djangoproject.com/en/5.0/topics/http/sessions/>
-- renew cert: `certbot renew`
+- renew cert: `sudo certbot renew`
+  - issues could also be due to IP changing; may need to update @ no-ip website
 - renew domain
